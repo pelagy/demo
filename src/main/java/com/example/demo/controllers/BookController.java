@@ -1,7 +1,6 @@
 package com.example.demo.controllers;
 
 import com.example.demo.dto.BookDto;
-import com.example.demo.models.Book;
 import com.example.demo.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,15 +27,6 @@ public class BookController {
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
-//    @GetMapping("/{id}")
-//    ResponseEntity<Book> getId(@PathVariable(name = "id") long id) {
-//        Book book = bookService.get(id);
-//        if (book == null) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//        return new ResponseEntity<>(book, HttpStatus.OK);
-//    }
-
     @GetMapping("/{name}")
     ResponseEntity<BookDto> getNameBook(@PathVariable String name){
         return bookService.getByNameBook(name)
@@ -44,7 +34,7 @@ public class BookController {
                 .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
-    @PostMapping("/new")
+    @PostMapping
     ResponseEntity<BookDto> createBook(@RequestBody BookDto bookDTO){
     return new ResponseEntity<>(bookService.createBook(bookDTO), HttpStatus.OK);
     }

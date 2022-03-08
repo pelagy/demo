@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface BookMapper {
 
-    @Mapping(target = "nameBook", expression = "java(bookDTO.getNameBook() + bookDTO.getAuthor() + bookDTO.getPrice())")
+    @Mapping(target = "nameBook", expression = "java(bookDTO.getNameBook())")
     Book toBook(BookDto bookDTO);
     BookDto toBookDto(Book book);
 }
