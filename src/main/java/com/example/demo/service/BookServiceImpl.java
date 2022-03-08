@@ -1,33 +1,46 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.BookDto;
+import com.example.demo.mapper.BookMapper;
 import com.example.demo.models.Book;
 import com.example.demo.repository.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
+    private final BookMapper bookMapper;
 
-    @Autowired
-    public BookServiceImpl(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+    @Override
+    public Optional<BookDto> get(Long id) {
+        return bookRepository.findById(id)
+                .map(bookMapper::toBookDto);
     }
 
     @Override
-    public Book get(Long id) {
-        return bookRepository.getBookById(id);
+    public List<BookDto> getAllBookName() {
+        return bookRepository
+                .findAll()
+                .stream()
+                .map(bookMapper::toBookDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Book> getAllBookName() {
-        return (List<Book>) bookRepository.findAll();
+    public Optional<BookDto> getByNameBook(String nameBook) {
+        return bookRepository.findByNameBook(nameBook)
+                .map(bookMapper::toBookDto);
     }
 
     @Override
-    public Book getByNameBook(String nameBook) {
-        return bookRepository.findBookByNameBook(nameBook);
+    public BookDto createBook(BookDto bookDTO) {
+        Book book = bookMapper.toBook(bookDTO);
+        return bookMapper.toBookDto(bookRepository.save(book));
     }
 }

@@ -1,14 +1,18 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.BookDto;
 import com.example.demo.models.Book;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookService {
-    Book get(Long id);
+    Optional<BookDto> get(Long id);
 
-    List<Book> getAllBookName();
+    List<BookDto> getAllBookName();
 
-    Book getByNameBook(String nameBook);
+    Optional<BookDto> getByNameBook(String nameBook);
+
+    BookDto createBook(BookDto bookDto);
 
 }

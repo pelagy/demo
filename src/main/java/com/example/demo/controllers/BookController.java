@@ -1,12 +1,15 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dto.BookDto;
 import com.example.demo.models.Book;
 import com.example.demo.service.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,21 +17,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/books")
+@RequiredArgsConstructor
 public class BookController {
 
-    private BookService bookService;
+    private final BookService bookService;
 
-    @Autowired
-    public BookController(BookService bookService) {
-        this.bookService = bookService;
-    }
-
-    @GetMapping()
-    ResponseEntity<List<Book>> getAllBooks() {
-        List<Book> books = bookService.getAllBookName();
-        if (books == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    @GetMapping
+    ResponseEntity<List<BookDto>> getAllBooks() {
+        List<BookDto> books = bookService.getAllBookName();
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
@@ -42,11 +38,14 @@ public class BookController {
 //    }
 
     @GetMapping("/{name}")
-    ResponseEntity<Book> getNameBook(@PathVariable(name = "name") String nameBook){
-        Book book = bookService.getByNameBook(nameBook);
-        if(book == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(book, HttpStatus.OK);
+    ResponseEntity<BookDto> getNameBook(@PathVariable String name){
+        return bookService.getByNameBook(name)
+                .map(book -> new ResponseEntity<>(book, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    }
+
+    @PostMapping("/new")
+    ResponseEntity<BookDto> createBook(@RequestBody BookDto bookDTO){
+    return new ResponseEntity<>(bookService.createBook(bookDTO), HttpStatus.OK);
     }
 }

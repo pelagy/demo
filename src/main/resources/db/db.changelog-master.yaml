@@ -1,0 +1,59 @@
+databaseChangeLog:
+  - logicalFilePath: db/db.changelog-lesson1.yaml
+  - changeSet:
+      id: 1
+      author: your_liquibase_username
+      changes:
+        - createTable:
+            tableName: book
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name_book
+                  type: varchar(50)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: author
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: BIGINT
+  - changeSet:
+      id: 2
+      author: your_liquibase_username
+      comment: "Create admin user"
+      changes:
+        - insert:
+            tableName: book
+            columns:
+              - column:
+                  name: name_book
+                  value: "Witcher"
+              - column:
+                  name: author
+                  value: "22222"
+              - column:
+                  name: price
+                  value: 11.3
+        - insert:
+            tableName: book
+            columns:
+              - column:
+                  name: name_book
+                  value: "Lord of the Rings"
+              - column:
+                  name: author
+                  value: "111111"
+              - column:
+                  name: price
+                  value: 200.9
