@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.BookDto;
-import com.example.demo.models.Book;
 
 import java.util.List;
 import java.util.Optional;
