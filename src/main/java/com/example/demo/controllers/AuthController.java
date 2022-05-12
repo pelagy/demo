@@ -42,12 +42,12 @@ public class AuthController {
     public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
             Optional.ofNullable(requestDto)
-                    .filter(dto -> dto.getUsername() != null && dto.getPassword() != null)
+                    .filter(dto -> dto.getUserName() != null && dto.getPassword() != null)
                     .orElseThrow();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(requestDto.getUsername(), requestDto.getPassword()));
-            return userRepository.findByUserName(requestDto.getUsername())
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(requestDto.getUserName(), requestDto.getPassword()));
+            return userRepository.findByUserName(requestDto.getUserName())
                     .map(this::mapUserNameAndToken)
-                    .orElseThrow(() -> new UsernameNotFoundException("User with username - " + requestDto.getUsername() + " not found"));
+                    .orElseThrow(() -> new UsernameNotFoundException("User with username - " + requestDto.getUserName() + " not found"));
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username or password");
         }

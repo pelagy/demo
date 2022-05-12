@@ -1,4 +1,4 @@
-package mail;
+package com.example.demo.mail;
 
 public interface EmailService {
 

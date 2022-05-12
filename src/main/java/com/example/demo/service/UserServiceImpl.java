@@ -1,9 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.BookDto;
 import com.example.demo.dto.UserDto;
 import com.example.demo.mapper.UserMapper;
-import com.example.demo.models.Book;
 import com.example.demo.models.User;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

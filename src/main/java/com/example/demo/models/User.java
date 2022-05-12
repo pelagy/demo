@@ -10,6 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
@@ -22,9 +24,11 @@ import java.util.Set;
 @Setter
 public class User implements UserDetails {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(unique = true, nullable = false)
     private Long id;
 
-    @Column
+    @Column(name ="user_name")
     private String userName;
 
     @Column
@@ -32,6 +36,9 @@ public class User implements UserDetails {
 
     @Column
     private boolean active;
+
+    @Column
+    private String email;
 
 
 

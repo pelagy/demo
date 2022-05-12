@@ -1,10 +1,9 @@
 package com.example.demo.controllers;
 
-import com.example.demo.dto.BookDto;
 import com.example.demo.dto.UserDto;
-import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
+import com.example.demo.mail.EmailService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +18,11 @@ import java.util.List;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
-private final UserServiceImpl userService;
+
+    private final UserServiceImpl userService;
+    private final EmailService emailService;
+
+
 
     @GetMapping
     ResponseEntity<List<UserDto>> getAllUsers() {
@@ -27,8 +30,9 @@ private final UserServiceImpl userService;
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping()
     ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
+        emailService.sendSimpleMessage(userDto.getEmail());
         return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.OK);
     }
 

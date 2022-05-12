@@ -17,13 +17,13 @@ public abstract class UserMapper {
             @Mapping(target = "active", constant = "true"),
             @Mapping(
                     target = "password",
-                    expression = "java(passwordEncoder.encode(user.getPassword()))"),
+                    expression = "java(passwordEncoder.encode(userDto.getPassword()))"),
             @Mapping(
                     target = "roles",
                     expression = "java(java.util.Collections.singleton(com.example.demo.models.Role.USER))")
     })
-
     public abstract User toUser(UserDto userDto);
 
+    @Mapping(source = "username", target = "userName")
     public abstract UserDto toUserDto(User user);
 }
