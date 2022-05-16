@@ -24,6 +24,8 @@ public abstract class UserMapper {
     })
     public abstract User toUser(UserDto userDto);
 
-    @Mapping(source = "username", target = "userName")
+        @Mapping(target = "password", source = "password", ignore = true)
+        @Mapping(source = "username", target = "userName")
+
     public abstract UserDto toUserDto(User user);
 }

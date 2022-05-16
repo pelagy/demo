@@ -22,21 +22,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/", "/registration").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll();
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -45,7 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/**").permitAll()
+                .antMatchers("/swagger-ui**").permitAll()
                 //.antMatchers("").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
